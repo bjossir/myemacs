@@ -13,7 +13,7 @@
 (if (display-graphic-p)  ; GUI
     (progn
       (tool-bar-mode -1)
-      (set-face-attribute 'default nil :height 160)
+      (set-face-attribute 'default nil :height 180)
       (set-cursor-color "Red")))
 
 ;; do not write backups all over the place.
@@ -41,5 +41,9 @@
 ;; load my lua stuff
 (load "my-lua-stuff")
 
+(defun my-shell-hook ()
+  (local-set-key "\C-cl" 'erase-buffer))
+
+(add-hook 'shell-mode-hook 'my-shell-hook)
 
 
