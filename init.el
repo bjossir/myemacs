@@ -44,12 +44,19 @@
 ;; load my lua stuff
 (load "my-lua-stuff")
 
+;; make C-l work like in a normal shell (Press twice)
 (defun my-shell-hook ()
   (local-set-key "\C-cl" 'erase-buffer))
 
 (add-hook 'shell-mode-hook 'my-shell-hook)
 
+;; copy/move from one dired buffer to another
 (setq dired-dwim-target t)
+
+(setenv "GOPATH" (concat (getenv "GOPATH") ":$HOME/gocode"))
+(setenv "PATH" (concat (getenv "PATH") ":/usr/local/go/bin:$HOME/gocode/bin"))
+(setq exec-path (append exec-path '("/usr/local/go/bin")))
+(setq exec-path (append exec-path '("$HOME/gocode/bin")))
 
 (add-hook 'after-init-hook 'global-company-mode)
 
