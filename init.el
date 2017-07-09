@@ -46,4 +46,6 @@
 
 (add-hook 'shell-mode-hook 'my-shell-hook)
 
+(setq dired-dwim-target t)
+
 
