@@ -78,6 +78,9 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
+;; directory tree
+(require 'dirtree)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -85,7 +88,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (cargo racer company company-c-headers company-go company-lua company-php go-mode lua-mode))))
+    (dirtree cargo racer company company-c-headers company-go company-lua company-php go-mode lua-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
