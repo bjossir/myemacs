@@ -66,6 +66,13 @@
 
 (add-hook 'shell-mode-hook 'my-shell-hook)
 
+(add-hook 'rust-mode-hook #'racer-mode)
+(add-hook 'racer-mode-hook #'eldoc-mode)
+
+(require 'rust-mode)
+(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
+(setq company-tooltip-align-annotations t)
+
 ;; copy/move from one dired buffer to another
 (setq dired-dwim-target t)
 
@@ -78,7 +85,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (company company-c-headers company-go company-lua company-php go-mode lua-mode))))
+    (cargo racer company company-c-headers company-go company-lua company-php go-mode lua-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
