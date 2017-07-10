@@ -10,6 +10,8 @@
 
 (global-set-key "\C-m" 'newline-and-indent)
 
+(setenv "PS1" "$ ")
+
 (if (display-graphic-p)  ; GUI
     (progn
       (setenv "GOPATH" (concat (getenv "HOME") "/gocode"))
