@@ -12,6 +12,20 @@
 
 (if (display-graphic-p)  ; GUI
     (progn
+      (setenv "GOPATH" (concat (getenv "HOME") "/gocode"))
+      (setenv "PATH"
+              (concat
+               (concat (getenv "HOME") "/.cargo/bin") ":"
+               "/usr/local/go/bin" ":"
+               "/opt/local/bin" ":"
+               "/opt/local/sbin" ":"
+               (concat (getenv "GOPATH") "/bin") ":"
+               (getenv "PATH")))
+      (setq exec-path (append exec-path (list (concat (getenv "HOME") "/.cargo/bin"))))
+      (setq exec-path (append exec-path '("/usr/local/go/bin")))
+      (setq exec-path (append exec-path '("/opt/local/bin")))
+      (setq exec-path (append exec-path '("/opt/local/sbin")))
+      (setq exec-path (append exec-path (list (concat (getenv "GOPATH") "/bin"))))
       (tool-bar-mode -1)
       (set-face-attribute 'default nil :height 180)
       (set-cursor-color "Red")))
@@ -52,11 +66,6 @@
 
 ;; copy/move from one dired buffer to another
 (setq dired-dwim-target t)
-
-(setenv "GOPATH" (concat (getenv "GOPATH") ":$HOME/gocode"))
-(setenv "PATH" (concat (getenv "PATH") ":/usr/local/go/bin:$HOME/gocode/bin"))
-(setq exec-path (append exec-path '("/usr/local/go/bin")))
-(setq exec-path (append exec-path '("$HOME/gocode/bin")))
 
 (add-hook 'after-init-hook 'global-company-mode)
 
