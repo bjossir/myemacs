@@ -10,24 +10,8 @@
 
 (global-set-key "\C-m" 'newline-and-indent)
 
-(setenv "PS1" "$ ")
-
 (if (display-graphic-p)  ; GUI
-    (progn
-      (setenv "GOPATH" (concat (getenv "HOME") "/gocode"))
-      (setenv "PATH"
-              (concat
-               (concat (getenv "HOME") "/.cargo/bin") ":"
-               "/usr/local/go/bin" ":"
-               "/opt/local/bin" ":"
-               "/opt/local/sbin" ":"
-               (concat (getenv "GOPATH") "/bin") ":"
-               (getenv "PATH")))
-      (setq exec-path (append exec-path (list (concat (getenv "HOME") "/.cargo/bin"))))
-      (setq exec-path (append exec-path '("/usr/local/go/bin")))
-      (setq exec-path (append exec-path '("/opt/local/bin")))
-      (setq exec-path (append exec-path '("/opt/local/sbin")))
-      (setq exec-path (append exec-path (list (concat (getenv "GOPATH") "/bin"))))
+    (progn      
       (tool-bar-mode -1)
       (set-face-attribute 'default nil :height 180)
       (set-cursor-color "Red")))
@@ -48,6 +32,9 @@
 ;; my lisp folder
 (setq load-path (append load-path (list "~/.emacs.d/lisp")))
 
+;; my macports stuff
+(load "my-macports-stuff")
+
 ;; load my c/c++ stuff
 (load "my-c-stuff")
 
@@ -60,33 +47,23 @@
 ;; load my lua stuff
 (load "my-lua-stuff")
 
-;; make C-l work like in a normal shell (Press twice)
-(defun my-shell-hook ()
-  (local-set-key "\C-cl" 'erase-buffer))
+;; load my rust stuff
+(load "my-rust-stuff")
 
-(add-hook 'shell-mode-hook 'my-shell-hook)
-
-(add-hook 'rust-mode-hook #'racer-mode)
-(add-hook 'racer-mode-hook #'eldoc-mode)
-
-(require 'rust-mode)
-(define-key rust-mode-map (kbd "TAB") #'company-indent-or-complete-common)
-(setq company-tooltip-align-annotations t)
+;; load my shell stuff
+(load "my-shell-stuff")
 
 ;; copy/move from one dired buffer to another
 (setq dired-dwim-target t)
-
-(add-hook 'after-init-hook 'global-company-mode)
 
 (require 'ido)
 (ido-mode t)
 (setq ido-enable-flex-matching t)
 
-;;(require 'nyan-mode)
-;;(nyan-mode t)
-
 ;; directory tree
 (require 'dirtree)
+
+(add-hook 'after-init-hook 'global-company-mode)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -95,7 +72,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (nyan-mode nyan-prompt cider dirtree cargo racer company company-c-headers company-go company-lua company-php go-mode lua-mode))))
+    (company-irony company-irony-c-headers nyan-mode nyan-prompt cider dirtree cargo racer company company-c-headers company-go company-lua company-php go-mode lua-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
