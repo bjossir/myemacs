@@ -78,6 +78,13 @@
 
 (add-hook 'after-init-hook 'global-company-mode)
 
+(require 'ido)
+(ido-mode t)
+(setq ido-enable-flex-matching t)
+
+;;(require 'nyan-mode)
+;;(nyan-mode t)
+
 ;; directory tree
 (require 'dirtree)
 
@@ -88,7 +95,7 @@
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
    (quote
-    (dirtree cargo racer company company-c-headers company-go company-lua company-php go-mode lua-mode))))
+    (nyan-mode nyan-prompt cider dirtree cargo racer company company-c-headers company-go company-lua company-php go-mode lua-mode))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

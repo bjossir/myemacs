@@ -11,5 +11,6 @@ Thumbs.db
 # My emacs backups.
 backups/
 auto-save-list/
+ido.last
 
 
