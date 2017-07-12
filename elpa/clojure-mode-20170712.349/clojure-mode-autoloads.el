@@ -3,7 +3,7 @@
 ;;; Code:
 (add-to-list 'load-path (directory-file-name (or (file-name-directory #$) (car load-path))))
 
-;;;### (autoloads nil "clojure-mode" "clojure-mode.el" (22883 46120
+;;;### (autoloads nil "clojure-mode" "clojure-mode.el" (22886 23656
 ;;;;;;  0 0))
 ;;; Generated autoloads from clojure-mode.el
 

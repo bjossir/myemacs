@@ -16,7 +16,7 @@
  '(flycheck-color-mode-line-face-to-color (quote mode-line-buffer-id))
  '(package-selected-packages
    (quote
-    (color-theme-sanityinc-tomorrow company-irony company-irony-c-headers nyan-mode nyan-prompt cider dirtree cargo racer company company-c-headers company-go company-lua company-php go-mode lua-mode)))
+    (helm color-theme-sanityinc-tomorrow company-irony company-irony-c-headers nyan-mode nyan-prompt cider dirtree cargo racer company company-c-headers company-go company-lua company-php go-mode lua-mode)))
  '(vc-annotate-background nil)
  '(vc-annotate-color-map
    (quote
@@ -77,9 +77,6 @@
 ;; initialize package.el
 (package-initialize)
 
-(require 'color-theme-sanityinc-tomorrow)
-(color-theme-sanityinc-tomorrow-bright)
-;; my lisp folder
 (setq load-path (append load-path (list "~/.emacs.d/lisp")))
 
 ;; my macports stuff
@@ -103,12 +100,15 @@
 ;; load my shell stuff
 (load "my-shell-stuff")
 
+;; load my helm stuff
+(load "my-helm-stuff")
+
 ;; copy/move from one dired buffer to another
 (setq dired-dwim-target t)
 
-(require 'ido)
-(ido-mode t)
-(setq ido-enable-flex-matching t)
+;;(require 'ido)
+;;(ido-mode t)
+;;(setq ido-enable-flex-matching t)
 
 ;; directory tree
 (require 'dirtree)
