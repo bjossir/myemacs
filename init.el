@@ -57,6 +57,7 @@
 (setq-default indent-tabs-mode nil)
 
 (global-set-key "\C-m" 'newline-and-indent)
+(global-set-key "\C-c\C-m" 'compile)
 
 (if (display-graphic-p)  ; GUI
     (progn      

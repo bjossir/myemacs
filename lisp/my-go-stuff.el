@@ -17,6 +17,9 @@
              ; Godef jump key binding                                                      
              (local-set-key (kbd "M-.") 'godef-jump)
              (local-set-key (kbd "M-,") 'pop-tag-mark)
+             (set (make-local-variable 'compile-command)
+                  (concat "go build -v " buffer-file-name))
+             (local-set-key (kbd "C-c C-h") 'godoc)
              (setq indent-tabs-mode t)
              (setq tab-width 4)
              (set (make-local-variable 'company-backends) '(company-go))
