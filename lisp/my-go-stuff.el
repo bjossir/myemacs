@@ -14,6 +14,9 @@
 
 (add-hook 'go-mode-hook
           '(lambda ()
+             ; Godef jump key binding                                                      
+             (local-set-key (kbd "M-.") 'godef-jump)
+             (local-set-key (kbd "M-,") 'pop-tag-mark)
              (setq indent-tabs-mode t)
              (setq tab-width 4)
              (set (make-local-variable 'company-backends) '(company-go))
