@@ -14,6 +14,7 @@
 
 (add-hook 'go-mode-hook
           '(lambda ()
+             (go-eldoc-setup)
              ; Godef jump key binding                                                      
              (local-set-key (kbd "M-.") 'godef-jump)
              (local-set-key (kbd "M-,") 'pop-tag-mark)
