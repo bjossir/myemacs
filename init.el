@@ -15,7 +15,7 @@
 
 (when (display-graphic-p)
   (tool-bar-mode -1)
-  (set-face-attribute 'default nil :height 160)
+  (set-face-attribute 'default nil :height 180)
   (set-cursor-color "Red"))
 
 ;; do not write backups all over the place.
@@ -55,6 +55,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-enabled-themes (quote (leuven)))
  '(package-selected-packages (quote (company company-go go-eldoc go-mode use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
