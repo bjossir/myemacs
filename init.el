@@ -15,8 +15,8 @@
 
 (when (display-graphic-p)
   (tool-bar-mode -1)
-  (set-face-attribute 'default nil :height 180)
-  (set-cursor-color "Red"))
+  (set-frame-font "Source Code Pro")
+  (set-face-attribute 'default nil :height 180))
 
 ;; do not write backups all over the place.
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
@@ -42,6 +42,11 @@
   :ensure t
   :init (global-flycheck-mode))
 
+(defun indent-buffer ()
+  "Indent current buffer according to major mode."
+  (interactive)
+  (indent-region (point-min) (point-max)))
+
 (setq load-path (append load-path (list "~/.emacs.d/lisp")))
 
 ;; my go stuff
@@ -50,13 +55,27 @@
 ;; my C/C++ stuff
 (load "my-c-stuff")
 
+;; my rust stuff
+(load "my-rust-stuff")
+
+(require 'company)
+(add-hook 'after-init-hook 'global-company-mode)
+
+(require 'ido)
+(ido-mode t)
+
+(require 'magit)
+(global-set-key (kbd "C-x g") 'magit-status)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-enabled-themes (quote (leuven)))
- '(package-selected-packages (quote (company company-go go-eldoc go-mode use-package))))
+ '(package-selected-packages
+   (quote
+    (magit cargo rust-mode company company-go go-eldoc go-mode use-package))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
