@@ -21,6 +21,10 @@
 ;; do not write backups all over the place.
 (setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
 
+(when (and (equal emacs-version "27.2")                                                     
+           (eql system-type 'darwin))                                                       
+  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")) 
+
 ;; start package.el with emacs
 (require 'package)
 (setq package-enable-at-startup nil)
@@ -29,23 +33,37 @@
 (add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
 (package-initialize)
 
+(require 'lsp-mode)                                                                         
+(add-hook 'go-mode-hook #'lsp-deferred)                                                     
+                                                                                            
+;; Set up before-save hooks to format buffer and add/delete imports.                        
+;; Make sure you don't have other gofmt/goimports hooks enabled.                            
+(defun lsp-go-install-save-hooks ()                                                         
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)                                      
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))                                  
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)                                        
+                                                                                            
+(lsp-register-custom-settings                                                               
+ '(("gopls.completeUnimported" t t)                                                         
+   ("gopls.staticcheck" t t)))
+
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
-(eval-when-compile
-  (require 'use-package))
-(require 'diminish)
-(require 'bind-key)
+;;(eval-when-compile
+;;  (require 'use-package))
+;;(require 'diminish)
+;;(require 'bind-key)
 
 (use-package flycheck
   :ensure t
   :init (global-flycheck-mode))
 
-(defun indent-buffer ()
-  "Indent current buffer according to major mode."
-  (interactive)
-  (indent-region (point-min) (point-max)))
+;;(defun indent-buffer ()
+;;  "Indent current buffer according to major mode."
+;;  (interactive)
+;;  (indent-region (point-min) (point-max)))
 
 (setq load-path (append load-path (list "~/.emacs.d/lisp")))
 
@@ -53,19 +71,19 @@
 (load "my-go-stuff")
 
 ;; my C/C++ stuff
-(load "my-c-stuff")
+;;(load "my-c-stuff")
 
 ;; my rust stuff
-(load "my-rust-stuff")
+;;(load "my-rust-stuff")
 
 (require 'company)
 (add-hook 'after-init-hook 'global-company-mode)
 
-(require 'ido)
-(ido-mode t)
+;;(require 'ido)
+;;(ido-mode t)
 
-(require 'magit)
-(global-set-key (kbd "C-x g") 'magit-status)
+;;(require 'magit)
+;;(global-set-key (kbd "C-x g") 'magit-status)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
