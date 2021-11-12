@@ -17,9 +17,6 @@
 
 (add-hook 'go-mode-hook
           '(lambda ()
-             (go-eldoc-setup)
-             (local-set-key (kbd "M-.") 'godef-jump)
-             (local-set-key (kbd "M-,") 'pop-tag-mark)
              (set (make-local-variable 'compile-command)
                   (concat "go build -v " buffer-file-name))
              (local-set-key (kbd "C-c C-h") 'godoc)
