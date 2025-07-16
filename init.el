@@ -1,99 +1,115 @@
-;;; Package --- summary
+;;;; Package --- summary
 ;;; Commentary:
 ;;; Code:
+
 (if (eq system-type 'darwin)
     (setq mac-option-modifier nil))
 
-(column-number-mode t)
-(show-paren-mode t)
-(size-indication-mode t)
+(electric-pair-mode 1)
 
-(setq inhibit-startup-message t)
-(setq-default indent-tabs-mode nil)
-
-(global-set-key "\C-m" 'newline-and-indent)
-
-(when (display-graphic-p)
-  (tool-bar-mode -1)
-  (set-frame-font "Source Code Pro")
-  (set-face-attribute 'default nil :height 180))
-
-;; do not write backups all over the place.
-(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
-
-(when (and (equal emacs-version "27.2")                                                     
-           (eql system-type 'darwin))                                                       
-  (setq gnutls-algorithm-priority "NORMAL:-VERS-TLS1.3")) 
-
-;; start package.el with emacs
+;; Add MELPA as a package source
 (require 'package)
 (setq package-enable-at-startup nil)
-
-(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/"))
-(add-to-list 'package-archives '("gnu" . "http://elpa.gnu.org/packages/"))
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 (package-initialize)
 
-(require 'lsp-mode)                                                                         
-(add-hook 'go-mode-hook #'lsp-deferred)                                                     
-                                                                                            
-;; Set up before-save hooks to format buffer and add/delete imports.                        
-;; Make sure you don't have other gofmt/goimports hooks enabled.                            
-(defun lsp-go-install-save-hooks ()                                                         
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)                                      
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))                                  
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)                                        
-                                                                                            
-(lsp-register-custom-settings                                                               
- '(("gopls.completeUnimported" t t)                                                         
-   ("gopls.staticcheck" t t)))
-
+;; Bootstrap use-package
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 
-;;(eval-when-compile
-;;  (require 'use-package))
-;;(require 'diminish)
-;;(require 'bind-key)
+(eval-when-compile
+  (require 'use-package))
 
-(use-package flycheck
-  :ensure t
-  :init (global-flycheck-mode))
+(when (display-graphic-p)
+  (tool-bar-mode -1)
+  (setq default-directory "~/")
+  (set-cursor-color "Red")
+  (set-frame-font "Source Code Pro")
+  (set-face-attribute 'default nil :height 160))
 
-;;(defun indent-buffer ()
-;;  "Indent current buffer according to major mode."
-;;  (interactive)
-;;  (indent-region (point-min) (point-max)))
+(column-number-mode t)
+(show-paren-mode t)
+(size-indication-mode t)
+(menu-bar-mode -1)
+
+(global-display-line-numbers-mode 1)
+
+(setq inhibit-startup-message t)
+(setq-default indent-tabs-mode nil)
+
+;; do not write backups all over the place
+(setq backup-directory-alist '(("." . "~/.emacs.d/backups")))
+
+(global-set-key "\C-m" 'newline-and-indent)
 
 (setq load-path (append load-path (list "~/.emacs.d/lisp")))
 
-;; my go stuff
-(load "my-go-stuff")
-
 ;; my C/C++ stuff
-;;(load "my-c-stuff")
+(load "my-c-stuff")
 
-;; my rust stuff
-;;(load "my-rust-stuff")
+;; my Python stuff
+(load "my-python-stuff")
 
-(require 'company)
-(add-hook 'after-init-hook 'global-company-mode)
+;; my swift stuff
+;;(load "my-swift-stuff")
 
-;;(require 'ido)
-;;(ido-mode t)
+;; my go stuff
+;;(load "my-go-stuff")
 
-;;(require 'magit)
-;;(global-set-key (kbd "C-x g") 'magit-status)
+;;(which-key-mode 1)
+
+(use-package exec-path-from-shell
+  :init
+  (exec-path-from-shell-initialize))
+
+(use-package vterm)
+
+;; .editorconfig file support
+(use-package editorconfig
+    :ensure t
+    :config (editorconfig-mode +1))
+
+;; Rainbow delimiters makes nested delimiters easier to understand
+(use-package rainbow-delimiters
+    :ensure t
+    :hook ((prog-mode . rainbow-delimiters-mode)))
+
+;; Company mode (completion)
+(use-package company
+    :ensure t
+    :config
+    (global-company-mode +1))
+
+;; Powerline
+;;(use-package powerline
+;;  :ensure t
+;;  :config
+;;  (powerline-default-theme))
+
+;; Spaceline
+;;(use-package spaceline
+;;  :ensure t
+;;  :after powerline
+;;  :config
+;;  (spaceline-emacs-theme))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-enabled-themes (quote (leuven)))
+ '(custom-enabled-themes nil)
+ '(custom-safe-themes
+   '("3512fce0f3d84ca65bb58d7bfe9ddedf27ff96eee573c6e6dc0ba61d25a47d72"
+     "5b01334cb330cd69e5f3d6214521c9f9d703d1c31ca0f4f04f36b6cf9f4870c8"
+     default))
  '(package-selected-packages
-   (quote
-    (magit cargo rust-mode company company-go go-eldoc go-mode use-package))))
+   '(base16-theme company-go exec-path-from-shell flycheck-golangci-lint
+                  go-eldoc go-gen-test go-tag gorepl-mode lsp-pyright
+                  lsp-sourcekit lsp-ui marginalia pyvenv
+                  rainbow-delimiters rust-mode spaceline swift-mode
+                  vertico vterm which-key)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -101,7 +117,5 @@
  ;; If there is more than one, they won't work right.
  )
 
-(provide 'init)
-;;; init.el ends here
 
 
