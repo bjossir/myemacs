@@ -43,6 +43,25 @@
 
 (global-set-key "\C-m" 'newline-and-indent)
 
+(defun insert-line-below ()
+  "Insert an empty line below the current line."
+  (interactive)
+  (save-excursion
+    (end-of-line)
+    (open-line 1))
+  (next-line))
+
+(defun insert-line-above ()
+  "Insert an empty line above the current line."
+  (interactive)
+  (save-excursion
+    (end-of-line 0)
+    (open-line 1))
+  (previous-line))
+
+(global-set-key (kbd "C-c M-n") 'insert-line-above)
+(global-set-key (kbd "C-c n") 'insert-line-below)
+
 (setq load-path (append load-path (list "~/.emacs.d/lisp")))
 
 ;; my C/C++ stuff
