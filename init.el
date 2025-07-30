@@ -49,7 +49,8 @@
   (save-excursion
     (end-of-line)
     (open-line 1))
-  (next-line))
+  (next-line)
+  (indent-for-tab-command))
 
 (defun insert-line-above ()
   "Insert an empty line above the current line."
@@ -57,7 +58,8 @@
   (save-excursion
     (end-of-line 0)
     (open-line 1))
-  (previous-line))
+  (previous-line)
+  (indent-for-tab-command))
 
 (global-set-key (kbd "C-c M-n") 'insert-line-above)
 (global-set-key (kbd "C-c n") 'insert-line-below)
