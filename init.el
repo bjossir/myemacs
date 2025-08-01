@@ -28,6 +28,18 @@
   (set-frame-font "Source Code Pro")
   (set-face-attribute 'default nil :height 160))
 
+(defun remap-faces-default-attributes ()
+  (let ((family (face-attribute 'default :family))
+        (height (face-attribute 'default :height)))
+    (mapcar (lambda (face)
+              (face-remap-add-relative
+               face :family family :weight 'normal :height height))
+          (face-list))))
+
+(when (display-graphic-p)
+  (add-hook 'minibuffer-setup-hook 'remap-faces-default-attributes)
+  (add-hook 'change-major-mode-after-body-hook 'remap-faces-default-attributes))
+
 (column-number-mode t)
 (show-paren-mode t)
 (size-indication-mode t)
