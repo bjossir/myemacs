@@ -1,6 +1,6 @@
 ;;;; Package --- summary
 ;;; Commentary:
-;;; Code:
+;;; Code: Signed with GPG
 
 (if (eq system-type 'darwin)
     (setq mac-option-modifier nil))
